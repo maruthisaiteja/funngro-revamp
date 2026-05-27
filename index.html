@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funngro — Get Paid by Brands You Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --lime: #C8FF00;
+    --lime-dim: #8fb800;
+    --orange: #FF5C1A;
+    --bg: #060606;
+    --bg2: #0e0e0e;
+    --bg3: #161616;
+    --text: #F2EDE6;
+    --muted: #6a6a6a;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--lime);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--lime);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6,6,6,0.85);
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--lime); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--lime);
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: none;
+    letter-spacing: 0.2px;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: #fff; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.5;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,255,0,0.08) 0%, transparent 70%);
+    top: -100px; right: 100px;
+    animation: pulse 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); opacity: 0.5; }
+    to { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .hero-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(60px, 9vw, 120px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -3px;
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-headline .accent { color: var(--lime); font-style: italic; }
+  .hero-headline .stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+    color: transparent;
+  }
+
+  .hero-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 64px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-sub {
+    max-width: 360px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .btn-primary {
+    background: var(--lime);
+    color: #000;
+    padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: none;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-primary .arrow { transition: transform 0.2s; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 14px;
+    border: none;
+    background: none;
+    cursor: none;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { color: var(--text); }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 48px;
+  }
+  .hero-stat span {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .hero-stat p {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 2px;
+  }
+
+  /* TICKER */
+  .ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    background: var(--bg2);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: ticker 28s linear infinite;
+    width: max-content;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 40px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ticker-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--lime);
+    flex-shrink: 0;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 48px; }
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-tag::after {
+    content: '';
+    height: 1px;
+    width: 48px;
+    background: var(--lime);
+    opacity: 0.5;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  .section-title .accent { color: var(--lime); }
+  .section-title .italic { font-style: italic; color: var(--muted); }
+
+  /* STATS */
+  .stats-section { background: var(--bg2); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 64px;
+    border: 1px solid var(--border);
+  }
+  .stat-card {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .stat-card:last-child { border-right: none; }
+  .stat-card:hover { background: var(--bg3); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .stat-card:hover::before { transform: scaleX(1); }
+  .stat-number {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(40px, 4vw, 56px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .stat-number .plus { color: var(--lime); }
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    font-weight: 300;
+  }
+
+  /* STEPS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 80px;
+    align-items: center;
+  }
+  .steps-visual {
+    position: relative;
+    height: 500px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .steps-visual-inner {
+    text-align: center;
+  }
+  .steps-visual-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 180px;
+    font-weight: 700;
+    color: var(--lime);
+    opacity: 0.06;
+    line-height: 1;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+  }
+  .steps-visual-icon {
+    width: 80px; height: 80px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .steps-visual-icon svg { width: 32px; height: 32px; stroke: var(--lime); fill: none; stroke-width: 1.5; }
+  .steps-visual-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .steps-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: none;
+    transition: all 0.25s;
+  }
+  .step-item:hover { padding-left: 16px; }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--lime);
+    padding-top: 4px;
+    opacity: 0.7;
+  }
+  .step-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .step-content p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* INCOME LADDER */
+  .ladder-section { background: var(--bg2); }
+  .ladder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+    background: var(--border);
+  }
+  .ladder-card {
+    background: var(--bg2);
+    padding: 56px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .ladder-card:hover { background: var(--bg3); }
+  .ladder-card.featured {
+    background: var(--bg3);
+    border-top: 2px solid var(--lime);
+  }
+  .ladder-stage {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ladder-stage .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .ladder-card:nth-child(1) .dot { background: var(--muted); }
+  .ladder-card:nth-child(2) .dot { background: var(--lime); }
+  .ladder-card:nth-child(3) .dot { background: var(--orange); }
+  .ladder-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .ladder-earning {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--lime);
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .ladder-card:nth-child(3) .ladder-earning { color: var(--orange); }
+  .ladder-per {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .ladder-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ladder-list li {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 300;
+  }
+  .ladder-list li::before {
+    content: '—';
+    color: var(--lime);
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .ladder-card:nth-child(3) .ladder-list li::before { color: var(--orange); }
+
+  /* WORK TYPES */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+    background: var(--border);
+  }
+  .work-card {
+    background: var(--bg);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: none;
+  }
+  .work-card:hover { background: var(--bg2); }
+  .work-card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--lime);
+    opacity: 0.6;
+    letter-spacing: 2px;
+    margin-bottom: 36px;
+  }
+  .work-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .work-card-desc {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 360px;
+  }
+  .work-card-arrow {
+    position: absolute;
+    bottom: 40px; right: 40px;
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    color: var(--muted);
+  }
+  .work-card:hover .work-card-arrow {
+    background: var(--lime);
+    border-color: var(--lime);
+    color: #000;
+    transform: rotate(45deg);
+  }
+  .work-card-arrow svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* MEDIA LOGOS */
+  .media-section { padding: 80px 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .media-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .media-logos {
+    display: flex;
+    gap: 64px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .media-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: -0.5px;
+    transition: color 0.3s;
+    cursor: none;
+  }
+  .media-logo:hover { color: var(--text); }
+
+  /* CTA */
+  .cta-section {
+    background: var(--lime);
+    color: #000;
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .cta-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #000;
+  }
+  .cta-title .dark { color: rgba(0,0,0,0.4); }
+  .cta-right { display: flex; flex-direction: column; gap: 32px; }
+  .cta-right p {
+    font-size: 16px;
+    color: rgba(0,0,0,0.6);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .btn-dark {
+    background: #000;
+    color: var(--lime);
+    padding: 16px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: none;
+    width: fit-content;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.25s;
+  }
+  .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); }
+  .cta-stats {
+    display: flex;
+    gap: 40px;
+  }
+  .cta-stat span {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+  }
+  .cta-stat p {
+    font-size: 13px;
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    padding: 64px 48px 40px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 64px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .footer-logo span { color: var(--lime); }
+  .footer-tagline {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+  }
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* COUNTER */
+  .count-up { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">funn<span>gro</span></div>
+  <ul class="nav-links">
+    <li><a href="#earn">Earn</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#ladder">Income ladder</a></li>
+    <li><a href="#work">Work types</a></li>
+  </ul>
+  <button class="nav-cta">Download App</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">India's Youth Income Platform — 2026</div>
+
+  <h1 class="hero-headline reveal">
+    Get paid<br>
+    by brands<br>
+    <span class="accent">YOU</span> <span class="stroke">already</span><br>
+    love.
+  </h1>
+
+  <div class="hero-bottom">
+    <p class="hero-sub reveal reveal-delay-2">
+      <strong>70 lakh young Indians</strong> earn from brand promotion,
+      content, referrals, sampling, and surveys. Free forever. First
+      payout in under 24 hours.
+    </p>
+
+    <div class="hero-stat-row reveal reveal-delay-3">
+      <div class="hero-stat">
+        <span>70L<span style="color:var(--lime)">+</span></span>
+        <p>Young earners</p>
+      </div>
+      <div class="hero-stat">
+        <span>5K<span style="color:var(--lime)">+</span></span>
+        <p>Real brands</p>
+      </div>
+      <div class="hero-stat">
+        <span>24H</span>
+        <p>First payout</p>
+      </div>
+    </div>
+
+    <div class="hero-actions reveal reveal-delay-4">
+      <a href="#" class="btn-primary">
+        Download Free
+        <span class="arrow">→</span>
+      </a>
+      <a href="#how" class="btn-ghost">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section" id="earn">
+  <div class="section-tag">By the numbers</div>
+  <h2 class="section-title reveal">The platform that <span class="accent">actually</span><br>pays.</h2>
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-number"><span class="count-up" data-target="5000">0</span><span class="plus">+</span></div>
+      <div class="stat-label">Real Indian Brands</div>
+    </div>
+    <div class="stat-card reveal reveal-delay-1">
+      <div class="stat-number"><span class="count-up" data-target="70">0</span>L<span class="plus">+</span></div>
+      <div class="stat-label">Young Indians Earning</div>
+    </div>
+    <div class="stat-card reveal reveal-delay-2">
+      <div class="stat-number"><span class="count-up" data-target="1000">0</span><span class="plus">+</span></div>
+      <div class="stat-label">Live Projects Right Now</div>
+    </div>
+    <div class="stat-card reveal reveal-delay-3">
+      <div class="stat-number"><span class="count-up" data-target="12">0</span><span class="plus">+</span></div>
+      <div class="stat-label">Work Categories</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-tag">How it works</div>
+  <h2 class="section-title reveal">Five steps to your <span class="italic">first</span><br><span class="accent">payout.</span></h2>
+
+  <div class="steps-grid">
+    <div class="steps-visual reveal">
+      <div class="steps-visual-number" id="bigNum">01</div>
+      <div class="steps-visual-inner">
+        <div class="steps-visual-icon" id="stepIcon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div class="steps-visual-label" id="stepLabel">Download</div>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item" data-step="01" data-icon="download" data-label="Download">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Download & sign up</h3>
+          <p>Get the Funngro app. OTP verification, two minutes. Zero fees. You're in immediately with access to all brand campaigns.</p>
+        </div>
+      </div>
+      <div class="step-item" data-step="02" data-icon="campaign" data-label="Pick Campaign">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Pick a brand campaign</h3>
+          <p>Brand promotion, sampling, referrals, influencer briefs from 5,000+ real brands. Fresh campaigns drop every morning.</p>
+        </div>
+      </div>
+      <div class="step-item" data-step="03" data-icon="work" data-label="Do the Work">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Do the work</h3>
+          <p>Every campaign has clear rules. Post a reel, tag the brand, upload proof. No guesswork. No vague briefs. Ever.</p>
+        </div>
+      </div>
+      <div class="step-item" data-step="04" data-icon="paid" data-label="Get Paid">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Get paid instantly</h3>
+          <p>Instant UPI. First payout under 24 hours. Repeat payouts in seconds. Zero withdrawal fees. Real rupees, real fast.</p>
+        </div>
+      </div>
+      <div class="step-item" data-step="05" data-icon="grow" data-label="Grow">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>Grow your ladder</h3>
+          <p>Funngro is not a gig site with a ceiling. The more you work, the higher-value campaigns you unlock. Top earners become Clan Leaders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME LADDER -->
+<section class="ladder-section" id="ladder">
+  <div class="section-tag">Income ladder</div>
+  <h2 class="section-title reveal">From first task to<br><span class="accent">own business.</span></h2>
+  <p style="color:var(--muted); max-width: 480px; margin-top: 20px; font-size: 15px; font-weight: 300;" class="reveal">
+    Not a gig platform. A progressive system where your earnings, influence, and capabilities grow together.
+  </p>
+
+  <div class="ladder-grid">
+    <div class="ladder-card reveal">
+      <div class="ladder-stage">
+        <span class="dot"></span>
+        Stage 01 — Start
+      </div>
+      <div class="ladder-title">Your First Income</div>
+      <div class="ladder-earning">₹1K–₹3K</div>
+      <div class="ladder-per">per month</div>
+      <ul class="ladder-list">
+        <li>Brand surveys & sampling tasks</li>
+        <li>Simple promotion campaigns</li>
+        <li>Share feedback and insights</li>
+        <li>First income with zero investment</li>
+      </ul>
+    </div>
+    <div class="ladder-card featured reveal reveal-delay-1">
+      <div class="ladder-stage">
+        <span class="dot"></span>
+        Stage 02 — Grow · Popular
+      </div>
+      <div class="ladder-title">Multiply & Influence</div>
+      <div class="ladder-earning">₹3K–₹7K</div>
+      <div class="ladder-per">per month</div>
+      <ul class="ladder-list">
+        <li>Refer friends, build your network</li>
+        <li>Create content for real brands</li>
+        <li>Influence peers across platforms</li>
+        <li>Earnings multiply as influence grows</li>
+      </ul>
+    </div>
+    <div class="ladder-card reveal reveal-delay-2">
+      <div class="ladder-stage">
+        <span class="dot"></span>
+        Stage 03 — Build
+      </div>
+      <div class="ladder-title">Your Own Business</div>
+      <div class="ladder-earning">₹7K–₹15K+</div>
+      <div class="ladder-per">per month</div>
+      <ul class="ladder-list">
+        <li>Run brand promotions at scale</li>
+        <li>Lead teams, manage campaigns</li>
+        <li>Build your micro-business</li>
+        <li>Top 5% earn ₹18,000+/mo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WORK TYPES -->
+<section id="work">
+  <div class="section-tag">What you can do</div>
+  <h2 class="section-title reveal">Four kinds of work.<br><span class="accent italic">All from real brands.</span></h2>
+
+  <div class="work-grid">
+    <div class="work-card reveal">
+      <div class="work-card-num">01 / CONTENT CREATION</div>
+      <div class="work-card-title">Content<br>Creation</div>
+      <p class="work-card-desc">Reels, posts, blogs, photos for real brand campaigns. Your phone is the studio. Get paid per piece of content verified.</p>
+      <div class="work-card-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+    <div class="work-card reveal reveal-delay-1">
+      <div class="work-card-num">02 / BRAND PROMOTION</div>
+      <div class="work-card-title">Brand<br>Promotion</div>
+      <p class="work-card-desc">Share, post, talk about brands you already follow. Get paid for genuine recommendations. Your voice has value.</p>
+      <div class="work-card-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+    <div class="work-card reveal reveal-delay-2">
+      <div class="work-card-num">03 / REFERRALS</div>
+      <div class="work-card-title">Referrals &<br>Network</div>
+      <p class="work-card-desc">Bring friends to brands they'll like. Earn when they sign up, transact, or stay. ₹300–₹2,000 per successful referral.</p>
+      <div class="work-card-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+    <div class="work-card reveal reveal-delay-3">
+      <div class="work-card-num">04 / MICRO TASKS</div>
+      <div class="work-card-title">Micro Tasks<br>from Brands</div>
+      <p class="work-card-desc">Sampling, surveys, app testing, product ideation. Small, fast, paid by the task. Perfect for earning on your daily schedule.</p>
+      <div class="work-card-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<div class="media-section">
+  <div class="media-label">As featured in</div>
+  <div class="media-logos">
+    <div class="media-logo">Business News Week</div>
+    <div class="media-logo">FM Live</div>
+    <div class="media-logo">IBS Intelligence</div>
+    <div class="media-logo">Times of India</div>
+    <div class="media-logo">The Daily Brunch</div>
+    <div class="media-logo">Entrackr</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title reveal">
+    Your turn<br>to start<br>
+    <span class="dark">earning.</span>
+  </h2>
+  <div class="cta-right reveal reveal-delay-2">
+    <p>Join 70 lakh young Indians who earn real money from real brands every single day. Free forever. First payout under 24 hours.</p>
+    <div class="cta-stats">
+      <div class="cta-stat">
+        <span>4.2★</span>
+        <p>Play Store rating</p>
+      </div>
+      <div class="cta-stat">
+        <span>₹0</span>
+        <p>To join forever</p>
+      </div>
+    </div>
+    <a href="#" class="btn-dark">
+      Download Funngro Free →
+    </a>
+    <p style="font-size: 13px; opacity: 0.5; margin-top: -16px;">Available on Android & iOS</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">funn<span>gro</span></div>
+      <div class="footer-tagline">India's Youth Income Platform</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">Earn</a></li>
+          <li><a href="#">Stories</a></li>
+          <li><a href="#">Arcade</a></li>
+          <li><a href="#">SheeLancer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">For Brands</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Shark Tank India</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Funngro. All rights reserved.</span>
+    <span>Featured on Shark Tank India Season 2</span>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 60);
+});
+
+// TICKER
+const brands = ['ICICI Bank','Paytm','Toluna','CarDekho','Lifelong','Kotak','LXME','Nielsen','Mpokket','Novio','Axis Bank','Sharechat','OYO','Amazon','Flipkart','HDFC','Zomato','Swiggy'];
+const track = document.getElementById('ticker');
+const items = [...brands, ...brands].map(b => `<div class="ticker-item"><span class="ticker-dot"></span>${b}</div>`).join('');
+track.innerHTML = items + items;
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+
+// COUNT UP
+function animateCount(el, target, suffix) {
+  let start = 0;
+  const duration = 1800;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target).toLocaleString('en-IN');
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      animateCount(el, target);
+      countObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
+
+// STEP HOVER VISUAL
+const icons = {
+  download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v12m0 0l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>`,
+  campaign: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>`,
+  work: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>`,
+  paid: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>`,
+  grow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>`
+};
+
+document.querySelectorAll('.step-item').forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    document.getElementById('bigNum').textContent = item.dataset.step;
+    document.getElementById('stepLabel').textContent = item.dataset.label;
+    const iconKey = item.dataset.icon;
+    document.getElementById('stepIcon').innerHTML = icons[iconKey] || icons['download'];
+    document.getElementById('stepIcon').querySelector('svg').style.stroke = 'var(--lime)';
+    document.getElementById('stepIcon').querySelector('svg').style.width = '32px';
+    document.getElementById('stepIcon').querySelector('svg').style.height = '32px';
+  });
+});
+</script>
+</body>
+</html>
