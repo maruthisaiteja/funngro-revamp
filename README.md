@@ -8,7 +8,7 @@ A complete dark-themed redesign of the [Funngro](https://funngro.com) platform �
 
 ## Live Demo
 
-🔗 [View Live Site →](https://funngro-revamp.vercel.app)
+🔗 [View Live Site →](https://funngro-revamp-lime.vercel.app/)
 
 ---
 
@@ -122,8 +122,8 @@ Every push to `main` triggers an automatic redeploy.
 ## Author
 
 **Maruthi Sai Teja**
-- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/YOUR_PROFILE)
+- GitHub: [@maruthisaiteja](https://github.com/maruthisaiteja)
+- LinkedIn: [maruthi sai teja](https://www.linkedin.com/in/maruthi-sai-teja-16a899179)
 
 ---
 
